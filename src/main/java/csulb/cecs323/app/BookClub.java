@@ -14,6 +14,7 @@ package csulb.cecs323.app;
 
 // Import all of the entity classes that we have written for this application.
 import csulb.cecs323.model.*;
+import csulb.cecs323.View.View;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,9 +68,11 @@ public class BookClub {
       // Create an instance of BookClub and store our new EntityManager as an instance variable.
       BookClub bookclub = new BookClub(manager);
 
-
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
+
+      View mainView = new View(bookclub);
+      mainView.begin();
 
    } // End of the main method
 
