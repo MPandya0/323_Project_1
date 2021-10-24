@@ -14,7 +14,7 @@ package csulb.cecs323.app;
 
 // Import all of the entity classes that we have written for this application.
 import csulb.cecs323.model.*;
-import csulb.cecs323.View.View;
+import csulb.cecs323.view.View;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
