@@ -1,17 +1,18 @@
 # CECS 323 Project 1
 JPA - BOOKS
 
+[CECS 323 PROJECT: JPA - BOOKS](https://home.csulb.edu/~dbrown/CECS323/Projects/JPA/CECS%20323%20Project%20JPA%20-%20Books.pdf)
+
 ## Table of Contents
 - [Objective](#Objective)
 - [Introduction](#Introduction)
 - [UML](#UML)
+- [Functional Requirements](#Functional Requirements)
 - [DDL](#DDL)
 - [Authors](#Authors)
 
 ## Objective
 Get an introduction to coding in Java Persistence API (JPA) using a small number of common JPA constructs.
-
-[CECS 323 PROJECT: JPA - BOOKS](https://home.csulb.edu/~dbrown/CECS323/Projects/JPA/CECS%20323%20Project%20JPA%20-%20Books.pdf)
 
 ## Introduction
 JPA has annotations for every mapping of the object model to the relational model. Many of those annotations are just variations on a theme, and therefore easy to pick up and intuitive once you have some experience with JPA. Others are more distinctive and take longer to master. But overall, we do not have anywhere near enough time to devote to JPA that we would need if we were going to get a broad understanding of everything that it does. Instead, this project will concentrate on just a few of the constructs in JPA as a demonstration of the overall process for mapping from the OO model to the relational.
@@ -21,6 +22,27 @@ Frequently, you will be asked to start with an existing database and either upda
 Your job is to write the Java entities (annotated POJOs) for all the classes in this model:
 ## UML
 ![UML](./images/uml.JPG)
+
+
+## Functional Requirements
+1. Add new objects:
+    * Add a new Authoring Entity instance:
+      - Writing Group
+      - Individual Author
+      - Ad Hoc Team
+      - Add an Individual Author to an existing Ad Hoc Team
+    * Add a new Publisher
+    * Add a new Book
+2. List all the information about a specific Object:
+    * Publisher
+    * Book (include the publisher and the Authoring Entity information)
+    * Writing Group
+3. Delete a Book - be sure to prompt for all the elements of a candidate key.
+4. Update a Book - change the authoring entity for an existing book.
+5. List the primary key of all the rows of:
+    * Publishers
+    * Books (show the title as well as the ISBN)
+    * Authoring entities - and supply the **type** of authoring entity for each as well.
 
 ## DDL
 ```sql
@@ -64,6 +86,7 @@ create table BOOKS
     unique (TITLE, AUTHORING_ENTITY_NAME)
 );
 ```
+
 
 ## Authors
 * **Nathaniel Ventura** - https://github.com/nateV-2112
