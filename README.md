@@ -7,7 +7,7 @@ JPA - BOOKS
 - [Objective](#Objective)
 - [Introduction](#Introduction)
 - [UML](#UML)
-- [Functional Requirements](#Functional Requirements)
+- [Functional Requirements](#Functional-Requirements)
 - [DDL](#DDL)
 - [Authors](#Authors)
 
@@ -24,7 +24,8 @@ Your job is to write the Java entities (annotated POJOs) for all the classes in 
 ![UML](./images/uml.JPG)
 
 
-## Functional Requirements
+<h2 id="Functional-Requirements">Functional Requirements</h2>
+
 1. Add new objects:
     * Add a new Authoring Entity instance:
       - Writing Group
