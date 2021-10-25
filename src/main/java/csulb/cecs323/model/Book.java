@@ -21,7 +21,7 @@ public class Book {
     private Publisher publisher;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author", referencedColumnName = "email", nullable = false)
+    @JoinColumn(name = "AUTHORING_ENTITY_NAME ", referencedColumnName = "email", nullable = false)
     private AuthoringEntity authoringEntity;
 
     public Book() {}
