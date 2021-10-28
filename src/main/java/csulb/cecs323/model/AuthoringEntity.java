@@ -1,6 +1,38 @@
 package csulb.cecs323.model;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance
+@DiscriminatorColumn(name = "AUTHORING_ENTITY_TYPE", length = 31)
+@Table(name="AUTHORING_ENTITIES")
 public class AuthoringEntity {
-    private String name;
+    @Id
+    @Column(length = 30, nullable = false)
     private String email;
+    @Column(length = 80, nullable = false)
+    private String name;
+
+    public AuthoringEntity() {}
+
+    public AuthoringEntity(String email, String name) {
+        this.setEmail(email);
+        this.setName(name);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
