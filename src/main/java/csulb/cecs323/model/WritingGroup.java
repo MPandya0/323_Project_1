@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("Writing Group")
 public class WritingGroup extends AuthoringEntity {
-    @Column(length = 80)
+
+    @Column(name="HEAD_WRITER", length = 80)
     private String headWriter;
-    @Column
+
+    @Column(name="YEAR_FORMED")
     private int yearFormed;
 
     public WritingGroup() {}
