@@ -5,7 +5,21 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@NamedNativeQuery(
+        name = "FindPublisherUsingPhone",
+        query = "Select P.* From Publisher P WHERE P.phone = ?1"
+)
+@NamedNativeQuery(
+        name = "FindPublisherUsingEmail",
+        query = "Select P.* From Publisher P Where P.email = ?1"
+)
+@NamedNativeQuery(
+        name = "FindPublisherUsingName",
+        query = "Select P.* From Publisher P Where P.name = ?1"
+)
+
 public class Publisher {
+
     @Id
     @Column(length = 80, nullable = false)
     /**The name of the publisher*/

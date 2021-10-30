@@ -16,10 +16,7 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 import csulb.cecs323.view.View;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,15 +47,16 @@ public class BookClub {
     * application, without resorting to creating a global variable.
     */
    private static final Logger LOGGER = Logger.getLogger(BookClub.class.getName());
-
    /**
     * The constructor for the BookClub class.  All that it does is stash the provided EntityManager
     * for use later in the application.
     * @param manager    The EntityManager that we will use.
     */
+
    public BookClub(EntityManager manager) {
       this.entityManager = manager;
    }
+
 
    public static void main(String[] args) {
       LOGGER.fine("Creating EntityManagerFactory and EntityManager");
@@ -74,6 +72,8 @@ public class BookClub {
       View mainView = new View(bookclub);
       mainView.begin();
 
+      List<Publisher> p = manager.createNamedQuery("FindPublisherUsingName" ,Publisher.class).setParameter(1, "myname").getResultList();
+      System.out.println(p.size());
    } // End of the main method
 
    /**
@@ -96,4 +96,5 @@ public class BookClub {
          LOGGER.info("Persisted object after flush (non-null id): " + next);
       }
    } // End of createEntity member method
+
 } // End of BookClub class

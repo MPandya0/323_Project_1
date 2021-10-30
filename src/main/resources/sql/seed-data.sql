@@ -1,0 +1,1 @@
+INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('myname', 'email@email.com', '555-555-5555')
