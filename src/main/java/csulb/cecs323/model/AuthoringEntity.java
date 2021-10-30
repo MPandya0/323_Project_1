@@ -3,14 +3,15 @@ package csulb.cecs323.model;
 import javax.persistence.*;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "AUTHORING_ENTITY_TYPE", length = 31)
-@Table(name="AUTHORING_ENTITIES")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", discriminatorType=DiscriminatorType.STRING)
+//@Table(name="AUTHORING_ENTITIES")
 public class AuthoringEntity {
     @Id
-    @Column(length = 30, nullable = false)
+    @Column(name="EMAIL", length = 30, nullable = false)
     private String email;
-    @Column(length = 80, nullable = false)
+
+    @Column(name="NAME", length = 80, nullable = false)
     private String name;
 
     public AuthoringEntity() {}
