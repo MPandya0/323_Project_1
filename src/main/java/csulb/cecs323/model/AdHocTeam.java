@@ -1,33 +1,18 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("Ad Hoc Team")
 public class AdHocTeam extends AuthoringEntity {
-//    @Id
-//    @ManyToMany
-//    @JoinColumn(name="INDIVIDUAL_AUTHORS_EMAIL", referencedColumnName = "email", nullable = false)
-//    private List<AuthoringEntity> authoringEntityList = new ArrayList<AuthoringEntity>();
 
-//    @ManyToMany(mappedBy = "INDIVIDUAL_AUTHORS_EMAIL")
-//    private List<AuthoringEntity> authoringEntityList = new ArrayList<>();
-
-
-//    @JoinTable(
-//            name="INDIVIDUAL_AUTHORS_EMAIL",
-//            joinColumns = @JoinColumn(name = "INDIVIDUAL_AUTHORS_EMAIL", referencedColumnName = "email"),
-//            inverseJoinColumns = @JoinColumn()
-//    )
-
-
-
-//    @Id
-//    @ManyToMany
-//    @JoinColumns()
-//    private List<>
+    @ManyToMany
+    @JoinTable(
+            name="AD_HOC_TEAMS_MEMBER",
+            joinColumns=@JoinColumn(name="AD_HOC_TEAMS_EMAIL", referencedColumnName="EMAIL"),
+            inverseJoinColumns=@JoinColumn(name="INDIVIDUAL_AUTHORS_EMAIL", referencedColumnName="EMAIL"))
+    List<IndividualAuthor> individualAuthorList;
 
     public AdHocTeam() {}
 

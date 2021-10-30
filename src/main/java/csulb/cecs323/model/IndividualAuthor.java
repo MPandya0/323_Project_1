@@ -2,10 +2,15 @@ package csulb.cecs323.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("Individual Author")
 public class IndividualAuthor extends AuthoringEntity {
+
+    @ManyToMany(mappedBy="individualAuthorList")
+    List<AdHocTeam> adHocTeamList;
 
     public IndividualAuthor(){}
 
