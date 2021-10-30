@@ -4,24 +4,26 @@ import javax.persistence.*;
 
 @Entity
 @Table(uniqueConstraints = {
-        @UniqueConstraint(name = "UniquePublisher", columnNames = {"title", "publisher"}),
-        @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "author"})
+        @UniqueConstraint(name = "UniquePublisher", columnNames = {"title", "publisher_name"}),
+        @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "AUTHORING_ENTITY_NAME"})
 })
 public class Book {
     @Id
     @Column(length = 17, nullable = false)
     private String ISBN;
+
     @Column(length = 80, nullable = false)
     private String title;
+
     @Column(nullable = false)
     private int yearPublished;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_name", referencedColumnName = "name", nullable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="publisher_name", referencedColumnName="name", nullable = false)
     private Publisher publisher;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "AUTHORING_ENTITY_NAME ", referencedColumnName = "email", nullable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="AUTHORING_ENTITY_NAME", referencedColumnName="email", nullable = false)
     private AuthoringEntity authoringEntity;
 
     public Book() {}
