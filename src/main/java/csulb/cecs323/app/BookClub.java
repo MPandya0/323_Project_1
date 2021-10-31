@@ -233,7 +233,7 @@ public class BookClub {
 
    public Publisher findPublisherUsingPhone(String phone){
       try {
-         Publisher p = entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, phone).getSingleResult();
+         Publisher p = entityManager.createNamedQuery("FindPublisherUsingPhone", Publisher.class).setParameter(1, phone).getSingleResult();
          return p;
       } catch (IllegalArgumentException e) {
          System.out.println("Illegal Argument Exception");
