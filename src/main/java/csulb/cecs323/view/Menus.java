@@ -19,4 +19,12 @@ public class Menus {
         System.out.println("  3) Book");
         System.out.println("  4) Go back");
     }
+
+    public static void authoringEntityTypeMenu() {
+        System.out.println("\nWhat type of authoring entity?");
+        System.out.println("  1) Individual Author");
+        System.out.println("  2) Writing Group");
+        System.out.println("  3) Ad Hoc Team");
+        System.out.println("  4) Go Back");
+    }
 }
