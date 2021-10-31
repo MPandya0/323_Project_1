@@ -59,13 +59,59 @@ public class View {
     }
 
     private void createNewAuthoringEntity_UI() {
-        // TODO - make createNewAuthoringEntity_UI function
-        System.out.println("this is the AE UI window");
+        Menus.authoringEntityTypeMenu();
+        int option = UserInput.getIntRange(1, 4, "Menu Option: ");
+        if (option != 4) {
+            System.out.println("\nenter the following information");
+            System.out.print("Authoring Name: ");
+            String name = UserInput.getString().trim();
+            System.out.print("Email Address: ");
+            String email = UserInput.getString().trim();
+
+            AuthoringEntity ae;
+            if (option == 1) {
+                ae = new IndividualAuthor(email, name);
+            } else if (option == 2) {
+                System.out.print("Head Writer: ");
+                String headWriter = UserInput.getString().trim();
+                int year = getValidYearFromUser("Year Formed: ");
+                ae = new WritingGroup(headWriter, year, email, name);
+            } else {
+                ae = new AdHocTeam(email, name);
+            }
+
+            List<AuthoringEntity> aeList = new ArrayList<>();
+            aeList.add(ae);
+            System.out.println(ae.getClass().getName());
+        }
     }
 
     private void createNewPublisher_UI() {
-        // TODO - make createNewPublisher_UI function
-        System.out.println("this is the publisher UI window");
+        boolean newPublisherLoop = true;
+        while (newPublisherLoop) {
+            System.out.println("\nEnter the following information");
+            System.out.print("Publisher Name: ");
+            String name = UserInput.getString().trim();
+            System.out.print("Email Address: ");
+            String email = UserInput.getString().trim();
+            System.out.print("Phone Number: ");
+            String phone = UserInput.getString().trim();
+
+            // TODO - change to single item insert
+            Publisher publisher = new Publisher(name, email, phone);
+            List<Publisher> publisherList = new ArrayList<>();
+            publisherList.add(publisher);
+
+            try {
+                // validator
+                bc.insertItem(publisherList);
+                System.out.println("\n" + publisher.getName() + " inserted into database.");
+                newPublisherLoop = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                newPublisherLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
+            }
+        }
     }
 
     private void createNewBook_UI() {
@@ -78,9 +124,7 @@ public class View {
             String isbn = UserInput.getString().trim();
             Publisher publisher = getValidPublisherFromUser();
             AuthoringEntity ae = getValidAuthorFromUser();
-
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            int year = UserInput.getIntRange(0, currentYear, "Publication Year: ");
+            int year = getValidYearFromUser("Publication Year: ");
 
             // TODO - change to single item insert
             Book book = new Book(isbn, title, year, publisher, ae);
@@ -90,7 +134,7 @@ public class View {
             try {
                 bc.validateNewBook(book);
                 bc.insertItem(bookList);
-                System.out.println("\n" + book.getTitle() + " inserted into database");
+                System.out.println("\n" + book.getTitle() + " inserted into database.");
                 newBookLoop = false;
             } catch (PrimaryKeyConstraintException e) {
                 System.out.println(e.getMessage());
@@ -134,6 +178,11 @@ public class View {
             }
         }
         return ae;
+    }
+
+    private int getValidYearFromUser(String prompt) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        return UserInput.getIntRange(0, currentYear, prompt);
     }
 
     private void listObjectInformation_UI() {
