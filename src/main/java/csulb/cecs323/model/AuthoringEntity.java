@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", length=31, discriminatorType=DiscriminatorType.STRING)
 //@Table(name="AUTHORING_ENTITIES")
 public class AuthoringEntity {
     @Id
