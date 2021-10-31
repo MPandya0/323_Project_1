@@ -49,10 +49,12 @@ public class Book {
 
     public Book() {}
 
-    public Book(String ISBN, String title, int yearPublished) {
+    public Book(String ISBN, String title, int yearPublished, Publisher publisher, AuthoringEntity ae) {
         this.setISBN(ISBN);
         this.setTitle(title);
         this.setYearPublished(yearPublished);
+        this.setPublisher(publisher);
+        this.setAuthoringEntity(ae);
     }
 
     public String getISBN() {
@@ -77,6 +79,22 @@ public class Book {
 
     public void setYearPublished(int yearPublished) {
         this.yearPublished = yearPublished;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public AuthoringEntity getAuthoringEntity() {
+        return authoringEntity;
+    }
+
+    public void setAuthoringEntity(AuthoringEntity authoringEntity) {
+        this.authoringEntity = authoringEntity;
     }
 
     @Override
