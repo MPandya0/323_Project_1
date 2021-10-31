@@ -98,19 +98,32 @@ public class BookClub {
    } // End of createEntity member method
 
    /**
+    * Queries a selected book based off of the given
+    * ISBN. Returns null if no book is found.
     *
-    * @param isbn
-    * @return
+    * @param isbn The ISBN to query with
+    * @return The queried book
     */
    public Book selectBookByIsbn(String isbn) {
-      return this.entityManager.find(Book.class, isbn);
+      try {
+         return this.entityManager.find(Book.class, isbn);
+      } catch (IllegalArgumentException e) {
+         System.out.println("Illegal Argument Exception");
+         System.out.println(e.getMessage());
+         return null;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return null;
+      }
    }
 
    /**
+    * Selects a given book based off of the given title
+    * and publisher. Returns null if no book is found.
     *
-    * @param title
-    * @param publisher
-    * @return
+    * @param title The title of the book
+    * @param publisher The books author
+    * @return The queried book
     */
    public Book selectBookTitlePublisher(String title, String publisher) {
       List<Book> bList = this.entityManager.createNamedQuery("FindPublisherUsingTitlePublisherName",
@@ -122,10 +135,12 @@ public class BookClub {
    } // End of selectBookTitlePublisher member method
 
    /**
+    * Selects a book based off of the given title and author.
+    * Returns null if no book is found;
     *
-    * @param title
-    * @param author
-    * @return
+    * @param title The title of the book
+    * @param author The books author
+    * @return The queried book
     */
    public Book selectBookTitleAuthor(String title, String author) {
       List<Book> bList = this.entityManager.createNamedQuery("FindPublisherUsingTitleAuthoringEntityName",
@@ -135,4 +150,12 @@ public class BookClub {
       else
          return null;
    } // End of selectBookTitleAuthor member method
+
+   public <E> void insertItem(List<E> list) {
+      EntityTransaction tx = entityManager.getTransaction();
+      tx.begin();
+      createEntity(list);
+      tx.commit();
+   }
+
 } // End of BookClub class
