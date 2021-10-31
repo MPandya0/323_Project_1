@@ -1,5 +1,5 @@
 INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('Macmillan Inc.', 'macmillan@hotmail.com', '555-555-0000')
-INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('Simon & Schuster', 'simon.schuster@yahoo.com', '555-555-0001')
+    INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('Simon & Schuster', 'simon.schuster@yahoo.com', '555-555-0001')
 INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('J. B. Lippincott & Co.', 'lippincott@bing.com', '555-555-0010')
 INSERT INTO PUBLISHER (NAME, EMAIL, PHONE) VALUES ('Charles Scribners Sons', 'charles.scribner@protonmail.com', '555-555-0011')
 INSERT INTO AUTHORINGENTITY (EMAIL, AUTHORING_ENTITY_TYPE, NAME) VALUES ('margaret@hotmail.com', 'Individual Author', 'Margaret Mitchell')

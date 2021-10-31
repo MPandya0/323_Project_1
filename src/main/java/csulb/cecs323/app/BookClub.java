@@ -71,9 +71,13 @@ public class BookClub {
 
       View mainView = new View(bookclub);
       mainView.begin();
-
+      //test out publisher Query
       List<Publisher> p = manager.createNamedQuery("FindPublisherUsingName" ,Publisher.class).setParameter(1, "myname").getResultList();
       System.out.println(p.size());
+
+      //test out wrting group query
+      List<AuthoringEntity> wg = manager.createNamedQuery("FindWritingGroupUsingEmail", AuthoringEntity.class).setParameter(1, "margaret@hotmail.com").getResultList();
+      System.out.println(wg.size());
    } // End of the main method
 
    /**
