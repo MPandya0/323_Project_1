@@ -74,7 +74,7 @@ public class View {
         pList.add(p1);
 
         System.out.println("Adding first publisher");
-        bc.addItems(pList);
+        bc.insertItem(pList);
         System.out.println("Adding second publisher");
         pList.clear();
         pList.add(p2);
@@ -82,7 +82,7 @@ public class View {
         num = UserInput.getIntRange(0, 100, "Enter a number: ");
 
         try {
-            bc.addItems(pList);
+            bc.insertItem(pList);
         } catch (Exception e) {//
             System.out.println(e.getMessage());
         }
