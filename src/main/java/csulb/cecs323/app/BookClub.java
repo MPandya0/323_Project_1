@@ -15,6 +15,7 @@ package csulb.cecs323.app;
 // Import all of the entity classes that we have written for this application.
 import csulb.cecs323.model.*;
 import csulb.cecs323.view.View;
+import csulb.cecs323.errorhandeling.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class BookClub {
     * Rather than make this a global variable, we will make it an instance variable within the BookClub
     * class, and create an instance of BookClub in the main.
     */
-   private EntityManager entityManager;
+   public EntityManager entityManager; // TODO - change back to private after all functions are written.
 
    /**
     * The Logger can easily be configured to log to a file, rather than, or in addition to, the console.
@@ -154,6 +155,20 @@ public class BookClub {
       else
          return null;
    } // End of selectBookTitleAuthor member method
+
+   public void validateNewBook(Book newBook) throws PrimaryKeyConstraintException, UniqueConstraintException {
+      Book queriedBook = selectBookByIsbn(newBook.getISBN());
+      if (queriedBook != null)
+         throw new PrimaryKeyConstraintException(newBook.getISBN() + " is already an existing ISBN");
+
+      queriedBook = selectBookTitlePublisher(newBook.getTitle(), newBook.getPublisher().getName());
+      if (queriedBook != null)
+         throw new UniqueConstraintException("Invalid title and publisher exception.");
+
+      queriedBook = selectBookTitleAuthor(newBook.getTitle(), newBook.getAuthoringEntity().getEmail());
+      if (queriedBook != null)
+         throw new UniqueConstraintException("Invalid title and author exception.");
+   }
 
    public <E> void insertItem(List<E> list) {
       EntityTransaction tx = entityManager.getTransaction();
