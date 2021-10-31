@@ -257,16 +257,16 @@ public class View {
                 String publisher = UserInput.getString();
 
                 recievedBook = bc.selectBookTitlePublisher(title, publisher);
-                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook.getISBN(), recievedBook.getTitle(), recievedBook.getYearPublished() );
 
             case 3:
                 System.out.println("title");
                 String title1 = UserInput.getString();
 
-                System.out.println("Publisher");
+                System.out.println("Authoring Entity");
                 String author = UserInput.getString();
 
-                recievedBook = bc.selectBookTitlePublisher(title1, author);
+                recievedBook = bc.selectBookTitleAuthor(title1, author);
                 System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
         }
 
