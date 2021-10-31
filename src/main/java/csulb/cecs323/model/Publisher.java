@@ -87,7 +87,7 @@ public class Publisher {
     public boolean equals(Object o) {
         if (o instanceof Publisher) {
             Publisher p = (Publisher) o;
-            return this.name == p.name;
+            return this.name.equals(p.name);
         }
         return false;
     }
