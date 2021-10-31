@@ -97,4 +97,42 @@ public class BookClub {
       }
    } // End of createEntity member method
 
+   /**
+    *
+    * @param isbn
+    * @return
+    */
+   public Book selectBookByIsbn(String isbn) {
+      return this.entityManager.find(Book.class, isbn);
+   }
+
+   /**
+    *
+    * @param title
+    * @param publisher
+    * @return
+    */
+   public Book selectBookTitlePublisher(String title, String publisher) {
+      List<Book> bList = this.entityManager.createNamedQuery("FindPublisherUsingTitlePublisherName",
+              Book.class).setParameter(1, title).setParameter(2, publisher).getResultList();
+      if (bList.size() != 0)
+         return bList.get(0);
+      else
+         return null;
+   } // End of selectBookTitlePublisher member method
+
+   /**
+    *
+    * @param title
+    * @param author
+    * @return
+    */
+   public Book selectBookTitleAuthor(String title, String author) {
+      List<Book> bList = this.entityManager.createNamedQuery("FindPublisherUsingTitleAuthoringEntityName",
+              Book.class).setParameter(1, title).setParameter(2, author).getResultList();
+      if (bList.size() != 0)
+         return bList.get(0);
+      else
+         return null;
+   } // End of selectBookTitleAuthor member method
 } // End of BookClub class
