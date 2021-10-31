@@ -1,10 +1,11 @@
 package csulb.cecs323.view;
 
 import csulb.cecs323.app.*;
-import csulb.cecs323.model.Publisher;
-
+import csulb.cecs323.model.*;
+import csulb.cecs323.errorhandeling.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -46,7 +47,93 @@ public class View {
     }
 
     private void addNewObject_UI() {
-        System.out.println("Add new object function");
+        Menus.createNewItemMainMenu();
+        int option = UserInput.getIntRange(1, 4, "Menu Option: ");
+        if (option == 1) {
+            createNewAuthoringEntity_UI();
+        } else if (option == 2) {
+            createNewPublisher_UI();
+        } else if (option == 3) {
+            createNewBook_UI();
+        }
+    }
+
+    private void createNewAuthoringEntity_UI() {
+        // TODO - make createNewAuthoringEntity_UI function
+        System.out.println("this is the AE UI window");
+    }
+
+    private void createNewPublisher_UI() {
+        // TODO - make createNewPublisher_UI function
+        System.out.println("this is the publisher UI window");
+    }
+
+    private void createNewBook_UI() {
+        boolean newBookLoop = true;
+        while (newBookLoop) {
+            System.out.println("\nEnter the following information");
+            System.out.print("Title: ");
+            String title = UserInput.getString().trim();
+            System.out.print("ISBN: ");
+            String isbn = UserInput.getString().trim();
+            Publisher publisher = getValidPublisherFromUser();
+            AuthoringEntity ae = getValidAuthorFromUser();
+
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            int year = UserInput.getIntRange(0, currentYear, "Publication Year: ");
+
+            // TODO - change to single item insert
+            Book book = new Book(isbn, title, year, publisher, ae);
+            List<Book> bookList = new ArrayList<>();
+            bookList.add(book);
+
+            try {
+                bc.validateNewBook(book);
+                bc.insertItem(bookList);
+                System.out.println("\n" + book.getTitle() + " inserted into database");
+                newBookLoop = false;
+            } catch (PrimaryKeyConstraintException e) {
+                System.out.println(e.getMessage());
+                newBookLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
+            } catch (UniqueConstraintException e) {
+                System.out.println(e.getMessage());
+                newBookLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
+            }
+        }
+    }
+
+    private Publisher getValidPublisherFromUser() {
+        Publisher publisher = null;
+        boolean publisherInSystem = false;
+        while (!publisherInSystem) {
+            System.out.print("Publisher name: ");
+            String pName = UserInput.getString().trim();
+            // TODO - replace code with bc function (get publisher)
+            publisher = bc.entityManager.find(Publisher.class, pName);
+            if (publisher == null) {
+                System.out.println("That is not an existing publisher in our database.");
+            } else {
+                publisherInSystem = true;
+            }
+        }
+        return publisher;
+    }
+
+    private AuthoringEntity getValidAuthorFromUser() {
+        AuthoringEntity ae = null;
+        boolean authorInSystem = false;
+        while (!authorInSystem) {
+            System.out.print("Authoring Entity Email: ");
+            String authorEmail = UserInput.getString().trim();
+            // TODO - replace code with bc function (get author)
+            ae = bc.entityManager.find(AuthoringEntity.class, authorEmail);
+            if (ae == null) {
+                System.out.println("That is not a recognized authoring entity email.");
+            } else {
+                authorInSystem = true;
+            }
+        }
+        return ae;
     }
 
     private void listObjectInformation_UI() {
