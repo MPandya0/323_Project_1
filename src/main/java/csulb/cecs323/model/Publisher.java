@@ -17,7 +17,7 @@ import java.util.ArrayList;
 )
 @NamedNativeQuery(
         name = "FindPublisherUsingName",
-        query = "Select P.* From Publisher P Where P.name = ?1",
+        query = "Select P.* From Publisher P Where P.name = ? ",
         resultClass = Publisher.class
 )
 

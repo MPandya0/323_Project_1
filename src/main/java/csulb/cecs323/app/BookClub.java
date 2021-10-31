@@ -173,6 +173,20 @@ public class BookClub {
          throw new UniqueConstraintException("Invalid title and author exception.");
    }
 
+   public void validateNewPublisher(Publisher newPublisher) throws PrimaryKeyConstraintException, UniqueConstraintException {
+      Publisher queriedPublisher = findPublisherUsingName(newPublisher.getName());
+      if (queriedPublisher != null)
+         throw new PrimaryKeyConstraintException("The publisher name \"" + newPublisher.getName() + "\" already exists.");
+
+      queriedPublisher = findPublisherUsingEmail(newPublisher.getEmail());
+      if (queriedPublisher != null)
+         throw new UniqueConstraintException("Email address \"" + newPublisher.getEmail() + "\" already exists.");
+
+      queriedPublisher = findPublisherUsingPhone(newPublisher.getPhone());
+      if (queriedPublisher != null)
+         throw new UniqueConstraintException("That Phone number already exists in our system.");
+   }
+
    public <E> void insertItem(List<E> list) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
@@ -217,15 +231,13 @@ public class BookClub {
 
    public Publisher findPublisherUsingEmail(String email){
       try {
-         List<Publisher> p = entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, email).getResultList();
-         System.out.println(p.size());
-         return p.get(0);
+         return entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, email).getSingleResult();
       } catch (IllegalArgumentException e) {
          System.out.println("Illegal Argument Exception");
          System.out.println(e.getMessage());
          return null;
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+//         System.out.println(e.getMessage());
          return null;
       }
    }
@@ -233,14 +245,13 @@ public class BookClub {
 
    public Publisher findPublisherUsingPhone(String phone){
       try {
-         Publisher p = entityManager.createNamedQuery("FindPublisherUsingPhone", Publisher.class).setParameter(1, phone).getSingleResult();
-         return p;
+         return entityManager.createNamedQuery("FindPublisherUsingPhone", Publisher.class).setParameter(1, phone).getSingleResult();
       } catch (IllegalArgumentException e) {
          System.out.println("Illegal Argument Exception");
          System.out.println(e.getMessage());
          return null;
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+//         System.out.println(e.getMessage());
          return null;
       }
    }

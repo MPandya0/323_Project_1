@@ -108,7 +108,7 @@ public class View {
             publisherList.add(publisher);
 
             try {
-                // validator
+                bc.validateNewPublisher(publisher);
                 bc.insertItem(publisherList);
                 System.out.println("\n" + publisher.getName() + " inserted into database.");
                 newPublisherLoop = false;
@@ -141,10 +141,7 @@ public class View {
                 bc.insertItem(bookList);
                 System.out.println("\n" + book.getTitle() + " inserted into database.");
                 newBookLoop = false;
-            } catch (PrimaryKeyConstraintException e) {
-                System.out.println(e.getMessage());
-                newBookLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
-            } catch (UniqueConstraintException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
                 newBookLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
             }
