@@ -7,15 +7,18 @@ import java.util.ArrayList;
 @Entity
 @NamedNativeQuery(
         name = "FindPublisherUsingPhone",
-        query = "Select P.* From Publisher P WHERE P.phone = ?1"
+        query = "Select P.* From Publisher P WHERE P.phone = ? ",
+        resultClass = Publisher.class
 )
 @NamedNativeQuery(
         name = "FindPublisherUsingEmail",
-        query = "Select P.* From Publisher P Where P.email = ?1"
+        query = "Select P.* From Publisher P Where P.email = ? ",
+        resultClass = Publisher.class
 )
 @NamedNativeQuery(
         name = "FindPublisherUsingName",
-        query = "Select P.* From Publisher P Where P.name = ?1"
+        query = "Select P.* From Publisher P Where P.name = ?1",
+        resultClass = Publisher.class
 )
 
 public class Publisher {

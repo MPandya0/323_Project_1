@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @NamedNativeQuery(
         name = "FindWritingGroupUsingEmail",
-        query = "Select AE.* From AuthoringEntity AE WHERE AUTHORING_ENTITY_TYPE = 'Individual Author' and email = ?1"
+        query = "Select AE.* From AuthoringEntity AE WHERE AUTHORING_ENTITY_TYPE = 'Writing Group' and email = ?1"
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", length=31, discriminatorType=DiscriminatorType.STRING)

@@ -1,8 +1,13 @@
 package csulb.cecs323.view;
 
 import csulb.cecs323.app.*;
+
 import csulb.cecs323.model.*;
 import csulb.cecs323.errorhandeling.*;
+
+import csulb.cecs323.model.AuthoringEntity;
+import csulb.cecs323.model.Book;
+import csulb.cecs323.model.Publisher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -180,14 +185,109 @@ public class View {
         return ae;
     }
 
+
     private int getValidYearFromUser(String prompt) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         return UserInput.getIntRange(0, currentYear, prompt);
     }
 
+
     private void listObjectInformation_UI() {
-        System.out.println("List object info function");
+        System.out.println("Queries \n 1) Publisher \n 2) Books \n 3) Writing Group \n");
+        int option = UserInput.getIntRange(1, 3, "Option: ");
+        int availableInfo = 1;
+        switch(option){
+            case 1:
+                System.out.println("Search By \n 1) Email \n 2) Name \n 3) Phone");
+                availableInfo = UserInput.getIntRange(1,3,"Option: ");
+                publisherInfo(availableInfo);
+            case 2:
+                System.out.println("Search By \n 1)ISBN  \n 2) title and Publisher \n 3) title and Authoring Entity \n");
+                availableInfo = UserInput.getIntRange(1,3,"Option: ");
+                bookInfo(availableInfo);
+            case 3:
+                writingGroupInfo(availableInfo);
+
+        }
+
     }
+
+    /**Info functions retrieve information from tables
+     * based on what information you can give them
+     * @param availableInfo
+     * @return queriedClass
+     */
+    private void publisherInfo(int availableInfo){
+        Publisher p;
+        switch(availableInfo){
+            case 1:
+                System.out.println("Email: ");
+                String email = UserInput.getString();
+                p = bc.findPublisherUsingEmail(email);
+                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+
+            case 2:
+                System.out.println("Name: ");
+                String name = UserInput.getString();
+                p = bc.findPublisherUsingName(name);
+                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+
+                case 3:
+                System.out.println("Phone: ");
+                String phone = UserInput.getString();
+                p = bc.findPublisherUsingPhone(phone);
+                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+
+        }
+
+    }
+
+    private void bookInfo(int availableInfo) {
+        Book recievedBook;
+        switch (availableInfo) {
+
+            case 1:
+                System.out.print("Enter ISBN: ");
+                String ISBN = UserInput.getString();
+                recievedBook=  bc.selectBookByIsbn(ISBN);
+                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+
+            case 2:
+                System.out.println("title");
+                String title = UserInput.getString();
+
+                System.out.println("Publisher");
+                String publisher = UserInput.getString();
+
+                recievedBook = bc.selectBookTitlePublisher(title, publisher);
+                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+
+            case 3:
+                System.out.println("title");
+                String title1 = UserInput.getString();
+
+                System.out.println("Publisher");
+                String author = UserInput.getString();
+
+                recievedBook = bc.selectBookTitlePublisher(title1, author);
+                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+        }
+
+    }
+
+    private void writingGroupInfo(int availableInfo){
+        switch (availableInfo){
+            case 1:
+                System.out.println("Email: \n");
+                String email = UserInput.getString();
+
+                AuthoringEntity ae = bc.findAuthoringEntity(email);
+                System.out.printf("%15s \n %15s", ae.getName(), ae.getEmail());
+        }
+
+    }
+
+
 
     private void deleteBook_UI() {
         System.out.println("Delete Book function");
