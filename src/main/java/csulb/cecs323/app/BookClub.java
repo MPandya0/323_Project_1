@@ -70,15 +70,18 @@ public class BookClub {
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
 
+      Publisher p = bookclub.findPublisherUsingEmail("simon.schuster@yahoo.com");
+      System.out.println(p.getName());
       View mainView = new View(bookclub);
       mainView.begin();
       //test out publisher Query
-      List<Publisher> p = manager.createNamedQuery("FindPublisherUsingName" ,Publisher.class).setParameter(1, "myname").getResultList();
-      System.out.println(p.size());
 
-      //test out wrting group query
-      List<AuthoringEntity> wg = manager.createNamedQuery("FindWritingGroupUsingEmail", AuthoringEntity.class).setParameter(1, "margaret@hotmail.com").getResultList();
-      System.out.println(wg.size());
+       //      List<Publisher> p = manager.createNamedQuery("FindPublisherUsingName" ,Publisher.class).setParameter(1, "myname").getResultList();
+//      System.out.println(p.size());
+//
+//      //test out wrting group query
+//      List<AuthoringEntity> wg = manager.createNamedQuery("FindWritingGroupUsingEmail", AuthoringEntity.class).setParameter(1, "margaret@hotmail.com").getResultList();
+//      System.out.println(wg.size());
    } // End of the main method
 
    /**
@@ -175,6 +178,71 @@ public class BookClub {
       tx.begin();
       createEntity(list);
       tx.commit();
+   }
+
+   /**
+    * Returns AuthoringEntity using PK
+    * @param email
+    * @return searched AuthoringEntity
+    */
+   public AuthoringEntity findAuthoringEntity(String email){
+      try {
+         return this.entityManager.find(AuthoringEntity.class, email);
+      } catch (IllegalArgumentException e) {
+         System.out.println("Illegal Argument Exception");
+         System.out.println(e.getMessage());
+         return null;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return null;
+      }
+   }
+
+   /**
+    *
+    * @return
+    */
+   public Publisher findPublisherUsingName(String name){
+      try {
+         return this.entityManager.find(Publisher.class, name);
+      } catch (IllegalArgumentException e) {
+         System.out.println("Illegal Argument Exception");
+         System.out.println(e.getMessage());
+         return null;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return null;
+      }
+   }
+
+   public Publisher findPublisherUsingEmail(String email){
+      try {
+         List<Publisher> p = entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, email).getResultList();
+         System.out.println(p.size());
+         return p.get(0);
+      } catch (IllegalArgumentException e) {
+         System.out.println("Illegal Argument Exception");
+         System.out.println(e.getMessage());
+         return null;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return null;
+      }
+   }
+
+
+   public Publisher findPublisherUsingPhone(String phone){
+      try {
+         Publisher p = entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, phone).getSingleResult();
+         return p;
+      } catch (IllegalArgumentException e) {
+         System.out.println("Illegal Argument Exception");
+         System.out.println(e.getMessage());
+         return null;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return null;
+      }
    }
 
 } // End of BookClub class
