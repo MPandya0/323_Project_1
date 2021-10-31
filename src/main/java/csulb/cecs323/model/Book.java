@@ -7,6 +7,27 @@ import javax.persistence.*;
         @UniqueConstraint(name = "UniquePublisher", columnNames = {"title", "publisher_name"}),
         @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "AUTHORING_ENTITY_NAME"})
 })
+//@NamedNativeQuery(
+//        name="FindBookUsingISBN",
+//        query = "Select B.* " +
+//                "From Book B " +
+//                "Where B.ISBN = ? ",
+//        resultClass = Book.class
+//)
+@NamedNativeQuery(
+        name = "FindPublisherUsingTitlePublisherName",
+        query = "Select B.* " +
+                "From Book B " +
+                "Where B.title = ? and B.publisher_name =  ? ",
+        resultClass = Book.class
+)
+@NamedNativeQuery(
+        name = "FindPublisherUsingTitleAuthoringEntityName",
+        query = "Select B.* " +
+                "From Book B " +
+                "Where B.title = ? and B.AUTHORING_ENTITY_NAME = ? ",
+        resultClass = Book.class
+)
 public class Book {
     @Id
     @Column(length = 17, nullable = false)
@@ -60,14 +81,14 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Need to write toString() for Book";  // TODO - Need to write return string
+        return "ISBN: " + getISBN() + "\tTitle: " + getTitle();
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Book) {
             Book b = (Book) o;
-            return this.ISBN == b.ISBN;
+            return this.ISBN.equals(b.ISBN);
         }
         return false;
     }
