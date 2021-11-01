@@ -290,6 +290,9 @@ public class BookClub {
     */
    public void printAuthoringEntityPK(){
       List<AuthoringEntity> ae = entityManager.createNamedQuery("AuthoringEntitiesPK", AuthoringEntity.class).getResultList();
+      if(ae.size() == 0){
+         System.out.println("Authoring Entity table is empty");
+      }
       for(AuthoringEntity authEnt: ae){
          System.out.println("Email: "+ authEnt.getEmail()  + " |Type: " + authEnt.getDiscrimatorValue());
       }
@@ -300,6 +303,9 @@ public class BookClub {
     */
    public void printpublisherPK(){
       List<Publisher> publishers = entityManager.createNamedQuery("PublisherPK").getResultList();
+      if(publishers.size() == 0){
+         System.out.println("Publisher table is empty");
+      }
       for(Publisher pub: publishers){
          System.out.println("name: " + pub.getName());
       }
@@ -310,6 +316,9 @@ public class BookClub {
     */
    public void printBookPK(){
       List<Book> books = entityManager.createNamedQuery("BookPK").getResultList();
+      if(books.size() == 0){
+         System.out.println("Table Books is Empty");
+      }
       for(Book bk: books){
          System.out.println("ISBN: " + bk.getISBN() + " Title: " + bk.getTitle());
       }

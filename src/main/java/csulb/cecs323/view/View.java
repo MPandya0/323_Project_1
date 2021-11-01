@@ -253,12 +253,15 @@ public class View {
                 System.out.println("Search By \n 1) Email \n 2) Name \n 3) Phone");
                 availableInfo = UserInput.getIntRange(1,3,"Option: ");
                 publisherInfo(availableInfo);
+                break;
             case 2:
                 System.out.println("Search By \n 1)ISBN  \n 2) title and Publisher \n 3) title and Authoring Entity \n");
                 availableInfo = UserInput.getIntRange(1,3,"Option: ");
                 bookInfo(availableInfo);
+                break;
             case 3:
                 writingGroupInfo(availableInfo);
+                break;
 
         }
 
@@ -277,18 +280,21 @@ public class View {
                 String email = UserInput.getString();
                 p = bc.findPublisherUsingEmail(email);
                 System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+                break;
 
             case 2:
                 System.out.println("Name: ");
                 String name = UserInput.getString();
                 p = bc.findPublisherUsingName(name);
                 System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+                break;
 
                 case 3:
                 System.out.println("Phone: ");
                 String phone = UserInput.getString();
                 p = bc.findPublisherUsingPhone(phone);
                 System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+                break;
 
         }
 
@@ -301,8 +307,10 @@ public class View {
             case 1:
                 System.out.print("Enter ISBN: ");
                 String ISBN = UserInput.getString();
+
                 recievedBook=  bc.selectBookByIsbn(ISBN);
-                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+                System.out.printf("ISBN: %-15s \n Title: %-40s \n YearPublished: %-40s", recievedBook.getISBN(), recievedBook.getTitle(), recievedBook.getYearPublished() );
+                break;
 
             case 2:
                 System.out.println("title");
@@ -313,6 +321,7 @@ public class View {
 
                 recievedBook = bc.selectBookTitlePublisher(title, publisher);
                 System.out.printf("%-15s \n %-40s \n %-40s", recievedBook.getISBN(), recievedBook.getTitle(), recievedBook.getYearPublished() );
+                break;
 
             case 3:
                 System.out.println("title");
@@ -323,6 +332,7 @@ public class View {
 
                 recievedBook = bc.selectBookTitleAuthor(title1, author);
                 System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+                break;
         }
 
     }
@@ -449,29 +459,20 @@ public class View {
     }
 
     private void listPrimaryKeys_UI() {
-        System.out.println("list primary keys function");
-    }
-
-    private void testArea() {
-        int num = UserInput.getIntRange(0, 100, "Enter a number: ");
-
-        Publisher p1 = new Publisher("test_P", "stuff@stuff.com", "555-555-5555");
-        Publisher p2 = new Publisher("test_P", "stuff@stuff.com", "555-555-5555");
-        List<Publisher> pList = new ArrayList<>();
-        pList.add(p1);
-
-        System.out.println("Adding first publisher");
-        bc.insertItems(pList);
-        System.out.println("Adding second publisher");
-        pList.clear();
-        pList.add(p2);
-
-        num = UserInput.getIntRange(0, 100, "Enter a number: ");
-
-        try {
-            bc.insertItems(pList);
-        } catch (Exception e) {//
-            System.out.println(e.getMessage());
+        System.out.println("1)Books \n 2) Publishers \n 3) Authoring entity\n 4) Exit Interface \n");
+        int option = UserInput.getIntRange(1,4,"Option:");
+        switch (option){
+            case 1:
+                bc.printBookPK();
+                break;
+            case 2:
+                bc.printpublisherPK();
+                break;
+            case 3:
+                bc.printAuthoringEntityPK();
+                break;
+            case 4: break;
         }
     }
+
 }
