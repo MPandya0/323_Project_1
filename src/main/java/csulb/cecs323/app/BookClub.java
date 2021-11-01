@@ -70,18 +70,9 @@ public class BookClub {
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
 
-      Publisher p = bookclub.findPublisherUsingEmail("simon.schuster@yahoo.com");
-      System.out.println(p.getName());
       View mainView = new View(bookclub);
       mainView.begin();
-      //test out publisher Query
 
-       //      List<Publisher> p = manager.createNamedQuery("FindPublisherUsingName" ,Publisher.class).setParameter(1, "myname").getResultList();
-//      System.out.println(p.size());
-//
-//      //test out wrting group query
-//      List<AuthoringEntity> wg = manager.createNamedQuery("FindWritingGroupUsingEmail", AuthoringEntity.class).setParameter(1, "margaret@hotmail.com").getResultList();
-//      System.out.println(wg.size());
    } // End of the main method
 
    /**
@@ -159,6 +150,14 @@ public class BookClub {
          return null;
    } // End of selectBookTitleAuthor member method
 
+   public IndividualAuthor selectIndividualAuthor(String email) {
+      return this.entityManager.find(IndividualAuthor.class, email);
+   }
+
+   public AdHocTeam selectAdHocTeam(String email) {
+      return this.entityManager.find(AdHocTeam.class, email);
+   }
+
    public void validateNewBook(Book newBook) throws PrimaryKeyConstraintException, UniqueConstraintException {
       Book queriedBook = selectBookByIsbn(newBook.getISBN());
       if (queriedBook != null)
@@ -201,6 +200,13 @@ public class BookClub {
    }
 
    public <E> void insertSingleItem(E item) {
+      EntityTransaction tx = entityManager.getTransaction();
+      tx.begin();
+      entityManager.persist(item);
+      tx.commit();
+   }
+
+   public <E> void persistClass(E item) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
       entityManager.persist(item);

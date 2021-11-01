@@ -25,6 +25,7 @@ public class Menus {
         System.out.println("  1) Individual Author");
         System.out.println("  2) Writing Group");
         System.out.println("  3) Ad Hoc Team");
-        System.out.println("  4) Go Back");
+        System.out.println("  4) Add Individual Author to Ad Hoc Group");
+        System.out.println("  5) Go Back");
     }
 }

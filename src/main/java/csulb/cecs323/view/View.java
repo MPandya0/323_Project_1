@@ -64,8 +64,10 @@ public class View {
 
     private void createNewAuthoringEntity_UI() {
         Menus.authoringEntityTypeMenu();
-        int option = UserInput.getIntRange(1, 4, "Menu Option: ");
-        if (option != 4) {
+        int option = UserInput.getIntRange(1, 5, "Menu Option: ");
+        if (option == 4) {
+            assignAuthorToAdHoc();
+        } else if (option < 4) {
             boolean newAuthorLoop = true;
             while (newAuthorLoop) {
 
@@ -151,6 +153,26 @@ public class View {
         }
     }
 
+    private void assignAuthorToAdHoc() {
+        boolean assignAuthorLoop = true;
+        while (assignAuthorLoop) {
+            System.out.println("\nEnter the following information");
+            AdHocTeam team = getValidAdHocTeamFromUser();
+            IndividualAuthor author = getValidIndividualAuthorFromUser();
+
+            if (!team.containsAuthor(author) && !author.containsAdHocTeam(team)) {
+                team.insertAuthor(author);
+                author.insertAdHocTeam(team);
+                bc.persistClass(team);
+                bc.persistClass(author);
+                System.out.println("\n" + author.getName() + " assigned to " + team.getName());
+            } else {
+                System.out.println("\nThat Assignment has already been made");
+            }
+            assignAuthorLoop = UserInput.getYesNo("Assign Another Author [y/n]: ");
+        }
+    }
+
     private Publisher getValidPublisherFromUser() {
         Publisher publisher = null;
         boolean publisherInSystem = false;
@@ -165,6 +187,38 @@ public class View {
             }
         }
         return publisher;
+    }
+
+    private IndividualAuthor getValidIndividualAuthorFromUser() {
+        IndividualAuthor ia = null;
+        boolean authorInSystem = false;
+        while (!authorInSystem) {
+            System.out.print("Authors Email: ");
+            String email = UserInput.getString().trim();
+            ia = bc.selectIndividualAuthor(email);
+            if (ia == null) {
+                System.out.println("That is not a recognized individual authors email");
+            } else {
+                authorInSystem = true;
+            }
+        }
+        return ia;
+    }
+
+    private AdHocTeam getValidAdHocTeamFromUser() {
+        AdHocTeam team = null;
+        boolean teamInSystem = false;
+        while (!teamInSystem) {
+            System.out.print("Ad Hoc Team Email: ");
+            String email = UserInput.getString().trim();
+            team = bc.selectAdHocTeam(email);
+            if (team == null) {
+                System.out.println("That is not a recognized ad hoc team email");
+            } else {
+                teamInSystem = true;
+            }
+        }
+        return team;
     }
 
     private AuthoringEntity getValidAuthorFromUser() {

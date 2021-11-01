@@ -28,6 +28,10 @@ public class AdHocTeam extends AuthoringEntity {
         return individualAuthorList.remove(individualAuthor);
     }
 
+    public boolean containsAuthor(IndividualAuthor individualAuthor) {
+        return individualAuthorList.contains(individualAuthor);
+    }
+
     @Override
     public String getEmail() {
         return super.getEmail();
