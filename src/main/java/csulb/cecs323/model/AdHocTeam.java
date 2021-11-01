@@ -20,6 +20,14 @@ public class AdHocTeam extends AuthoringEntity {
         super(email, name);
     }
 
+    public void insertAuthor(IndividualAuthor individualAuthor) {
+        individualAuthorList.add(individualAuthor);
+    }
+
+    public boolean removeAuthor(IndividualAuthor individualAuthor) {
+        return individualAuthorList.remove(individualAuthor);
+    }
+
     @Override
     public String getEmail() {
         return super.getEmail();
