@@ -10,13 +10,8 @@ import javax.persistence.*;
 )
 @NamedNativeQuery(
         name = "FindWritingGroupUsingEmail",
-<<<<<<< Updated upstream
         query = "Select AE.* From AuthoringEntity AE WHERE AUTHORING_ENTITY_TYPE = 'Writing Group' and email = ? ",
         resultClass = WritingGroup.class
-=======
-        query = "Select AE.* From AuthoringEntity AE WHERE AUTHORING_ENTITY_TYPE = 'Writing Group' and email = ?1",
-        resultClass = AuthoringEntity.class
->>>>>>> Stashed changes
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", length=31, discriminatorType=DiscriminatorType.STRING)

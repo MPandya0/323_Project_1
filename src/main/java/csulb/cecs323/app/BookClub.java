@@ -70,10 +70,8 @@ public class BookClub {
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
 
-<<<<<<< Updated upstream
-=======
       bookclub.printAuthoringEntityPK();
->>>>>>> Stashed changes
+
       View mainView = new View(bookclub);
       mainView.begin();
 
