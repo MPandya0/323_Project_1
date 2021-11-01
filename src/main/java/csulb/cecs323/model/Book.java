@@ -8,6 +8,11 @@ import javax.persistence.*;
         @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "AUTHORING_ENTITY_EMAIL"})
 })
 @NamedNativeQuery(
+        name = "BookPK",
+        query = "SELECT B.ISBN, B.title From Book B",
+        resultClass =  Book.class
+)
+@NamedNativeQuery(
         name = "FindPublisherUsingTitlePublisherName",
         query = "Select B.* " +
                 "From Book B " +

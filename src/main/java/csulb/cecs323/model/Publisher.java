@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 @Entity
 @NamedNativeQuery(
+        name = "PublisherPK",
+        query = "SELECT P.name From Publisher P",
+        resultClass = Publisher.class
+)
+@NamedNativeQuery(
         name = "FindPublisherUsingPhone",
         query = "Select P.* From Publisher P WHERE P.phone = ? ",
         resultClass = Publisher.class
