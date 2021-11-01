@@ -367,6 +367,30 @@ public class View {
         }
     }
 
+    private void updateBook_UI() {
+        Menus.bookSearchOptions();
+        int option = UserInput.getIntRange(1, 4, "User Option: ");
+        if (option != 4) {
+            Book book;
+            if (option == 1) {
+                book = getBookByIsbnFromUser();
+            } else if (option == 2) {
+                book = getBookByTitleAuthorFromUser();
+            } else {
+                book = getBookByTitlePublisherFromUser();
+            }
+            if (book != null) {
+                System.out.println("\nSelected Book: " + book);
+                System.out.println("Current authoring entity: " + book.getAuthoringEntity().getName());
+                System.out.println("\nEnter a new Authoring Entity");
+                AuthoringEntity ae = getValidAuthorFromUser();
+                book.setAuthoringEntity(ae);
+                bc.persistClass(book);
+                System.out.println(ae.getName() + " now assigned to " + book.getTitle());
+            }
+        }
+    }
+
     private Book getBookByIsbnFromUser() {
         Book book = null;
         boolean collectInfoLoop = true;
@@ -422,10 +446,6 @@ public class View {
             }
         }
         return book;
-    }
-
-    private void updateBook_UI() {
-        System.out.println("Book update function");
     }
 
     private void listPrimaryKeys_UI() {
