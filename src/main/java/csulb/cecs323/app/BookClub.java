@@ -187,10 +187,23 @@ public class BookClub {
          throw new UniqueConstraintException("That Phone number already exists in our system.");
    }
 
-   public <E> void insertItem(List<E> list) {
+   public void validateNewAuthor(AuthoringEntity ae) throws PrimaryKeyConstraintException {
+      AuthoringEntity queriedAuthor = findAuthoringEntity(ae.getEmail());
+      if (queriedAuthor != null)
+         throw new PrimaryKeyConstraintException("Email address \"" + ae.getEmail() + "\" already exists.");
+   }
+
+   public <E> void insertItems(List<E> list) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
       createEntity(list);
+      tx.commit();
+   }
+
+   public <E> void insertSingleItem(E item) {
+      EntityTransaction tx = entityManager.getTransaction();
+      tx.begin();
+      entityManager.persist(item);
       tx.commit();
    }
 

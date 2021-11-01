@@ -3,7 +3,6 @@ package csulb.cecs323.view;
 import csulb.cecs323.app.*;
 
 import csulb.cecs323.model.*;
-import csulb.cecs323.errorhandeling.*;
 
 import csulb.cecs323.model.AuthoringEntity;
 import csulb.cecs323.model.Book;
@@ -67,27 +66,37 @@ public class View {
         Menus.authoringEntityTypeMenu();
         int option = UserInput.getIntRange(1, 4, "Menu Option: ");
         if (option != 4) {
-            System.out.println("\nenter the following information");
-            System.out.print("Authoring Name: ");
-            String name = UserInput.getString().trim();
-            System.out.print("Email Address: ");
-            String email = UserInput.getString().trim();
+            boolean newAuthorLoop = true;
+            while (newAuthorLoop) {
 
-            AuthoringEntity ae;
-            if (option == 1) {
-                ae = new IndividualAuthor(email, name);
-            } else if (option == 2) {
-                System.out.print("Head Writer: ");
-                String headWriter = UserInput.getString().trim();
-                int year = getValidYearFromUser("Year Formed: ");
-                ae = new WritingGroup(headWriter, year, email, name);
-            } else {
-                ae = new AdHocTeam(email, name);
+                System.out.println("\nenter the following information");
+                System.out.print("Authoring Name: ");
+                String name = UserInput.getString().trim();
+                System.out.print("Email Address: ");
+                String email = UserInput.getString().trim();
+
+                AuthoringEntity ae;
+                if (option == 1) {
+                    ae = new IndividualAuthor(email, name);
+                } else if (option == 2) {
+                    System.out.print("Head Writer: ");
+                    String headWriter = UserInput.getString().trim();
+                    int year = getValidYearFromUser("Year Formed: ");
+                    ae = new WritingGroup(headWriter, year, email, name);
+                } else {
+                    ae = new AdHocTeam(email, name);
+                }
+
+                try {
+                    bc.validateNewAuthor(ae);
+                    bc.insertSingleItem(ae);
+                    System.out.println("\n" + ae.getName() + " inserted into database.");
+                    newAuthorLoop = false;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    newAuthorLoop = UserInput.getYesNo("Re-enter Information [y/n]: ");
+                }
             }
-
-            List<AuthoringEntity> aeList = new ArrayList<>();
-            aeList.add(ae);
-            System.out.println(ae.getClass().getName());
         }
     }
 
@@ -102,14 +111,11 @@ public class View {
             System.out.print("Phone Number: ");
             String phone = UserInput.getString().trim();
 
-            // TODO - change to single item insert
             Publisher publisher = new Publisher(name, email, phone);
-            List<Publisher> publisherList = new ArrayList<>();
-            publisherList.add(publisher);
 
             try {
                 bc.validateNewPublisher(publisher);
-                bc.insertItem(publisherList);
+                bc.insertSingleItem(publisher);
                 System.out.println("\n" + publisher.getName() + " inserted into database.");
                 newPublisherLoop = false;
             } catch (Exception e) {
@@ -131,14 +137,11 @@ public class View {
             AuthoringEntity ae = getValidAuthorFromUser();
             int year = getValidYearFromUser("Publication Year: ");
 
-            // TODO - change to single item insert
             Book book = new Book(isbn, title, year, publisher, ae);
-            List<Book> bookList = new ArrayList<>();
-            bookList.add(book);
 
             try {
                 bc.validateNewBook(book);
-                bc.insertItem(bookList);
+                bc.insertSingleItem(book);
                 System.out.println("\n" + book.getTitle() + " inserted into database.");
                 newBookLoop = false;
             } catch (Exception e) {
@@ -154,8 +157,7 @@ public class View {
         while (!publisherInSystem) {
             System.out.print("Publisher name: ");
             String pName = UserInput.getString().trim();
-            // TODO - replace code with bc function (get publisher)
-            publisher = bc.entityManager.find(Publisher.class, pName);
+            publisher = bc.findPublisherUsingName(pName);
             if (publisher == null) {
                 System.out.println("That is not an existing publisher in our database.");
             } else {
@@ -171,8 +173,7 @@ public class View {
         while (!authorInSystem) {
             System.out.print("Authoring Entity Email: ");
             String authorEmail = UserInput.getString().trim();
-            // TODO - replace code with bc function (get author)
-            ae = bc.entityManager.find(AuthoringEntity.class, authorEmail);
+            ae = bc.findAuthoringEntity(authorEmail);
             if (ae == null) {
                 System.out.println("That is not a recognized authoring entity email.");
             } else {
@@ -307,7 +308,7 @@ public class View {
         pList.add(p1);
 
         System.out.println("Adding first publisher");
-        bc.insertItem(pList);
+        bc.insertItems(pList);
         System.out.println("Adding second publisher");
         pList.clear();
         pList.add(p2);
@@ -315,7 +316,7 @@ public class View {
         num = UserInput.getIntRange(0, 100, "Enter a number: ");
 
         try {
-            bc.insertItem(pList);
+            bc.insertItems(pList);
         } catch (Exception e) {//
             System.out.println(e.getMessage());
         }
