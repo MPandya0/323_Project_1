@@ -4,12 +4,19 @@ import javax.persistence.*;
 
 @Entity
 @NamedNativeQuery(
+        name = "AuthoringEntitiesPK",
+        query = "SELECT AE.email, AE.AUTHORING_ENTITY_TYPE  FROM AuthoringEntity AE",
+        resultClass = AuthoringEntity.class
+)
+@NamedNativeQuery(
         name = "FindWritingGroupUsingEmail",
         query = "Select AE.* From AuthoringEntity AE WHERE AUTHORING_ENTITY_TYPE = 'Writing Group' and email = ? ",
         resultClass = WritingGroup.class
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", length=31, discriminatorType=DiscriminatorType.STRING)
+
+
 //@Table(name="AUTHORING_ENTITIES")
 public class AuthoringEntity {
     @Id
@@ -34,11 +41,15 @@ public class AuthoringEntity {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName(){ return this.name;}
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Transient
+    public String getDiscrimatorValue(){
+        String t = this.getClass().getAnnotation(DiscriminatorValue.class).value();
+        return t;
     }
 }

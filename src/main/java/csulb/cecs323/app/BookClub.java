@@ -70,6 +70,8 @@ public class BookClub {
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
 
+      bookclub.printAuthoringEntityPK();
+
       View mainView = new View(bookclub);
       mainView.begin();
 
@@ -283,4 +285,33 @@ public class BookClub {
       }
    }
 
+   /**
+    * prints Email and name of all AuthoringEntities in the db
+    */
+   public void printAuthoringEntityPK(){
+      List<AuthoringEntity> ae = entityManager.createNamedQuery("AuthoringEntitiesPK", AuthoringEntity.class).getResultList();
+      for(AuthoringEntity authEnt: ae){
+         System.out.println("Email: "+ authEnt.getEmail()  + " |Type: " + authEnt.getDiscrimatorValue());
+      }
+   }
+
+   /** prints name of all publishers in the DB
+    *
+    */
+   public void printpublisherPK(){
+      List<Publisher> publishers = entityManager.createNamedQuery("PublisherPK").getResultList();
+      for(Publisher pub: publishers){
+         System.out.println("name: " + pub.getName());
+      }
+   }
+
+   /** prints ISBN and title of all books in the DB
+    *
+    */
+   public void printBookPK(){
+      List<Book> books = entityManager.createNamedQuery("BookPK").getResultList();
+      for(Book bk: books){
+         System.out.println("ISBN: " + bk.getISBN() + " Title: " + bk.getTitle());
+      }
+   }
 } // End of BookClub class
