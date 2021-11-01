@@ -342,7 +342,86 @@ public class View {
 
 
     private void deleteBook_UI() {
-        System.out.println("Delete Book function");
+        Menus.bookSearchOptions();
+        int option = UserInput.getIntRange(1, 4, "User Option: ");
+        if (option != 4) {
+            Book book;
+            if (option == 1) {
+                book = getBookByIsbnFromUser();
+            } else if (option == 2) {
+                book = getBookByTitleAuthorFromUser();
+            } else {
+                book = getBookByTitlePublisherFromUser();
+            }
+            if (book != null) {
+                System.out.println("\nSelected Book: " + book + "\n");
+                boolean confirmDelete = UserInput.getYesNo("Are you sure you wish to delete " +
+                        book.getTitle() + " from file [y/n]: ");
+                if (confirmDelete) {
+                    System.out.println(book.getTitle() + " deleted");
+                    bc.deleteBook(book);
+                } else {
+                    System.out.println(book.getTitle() + " not deleted.");
+                }
+            }
+        }
+    }
+
+    private Book getBookByIsbnFromUser() {
+        Book book = null;
+        boolean collectInfoLoop = true;
+        while (collectInfoLoop) {
+            System.out.println("Enter the following information");
+            System.out.print("ISBN: ");
+            String isbn = UserInput.getString().trim();
+            book = bc.selectBookByIsbn(isbn);
+            if (book != null) {
+                collectInfoLoop = false;
+            } else {
+                collectInfoLoop = UserInput.getYesNo("\nThat ISBN does not exist.\nEnter another ISBN [y/n]: ");
+            }
+        }
+        return book;
+    }
+
+    private Book getBookByTitleAuthorFromUser() {
+        Book book = null;
+        boolean collectInfoLoop = true;
+        while (collectInfoLoop) {
+            System.out.println("Enter the following information");
+            System.out.print("Title: ");
+            String title = UserInput.getString().trim();
+            System.out.print("Author's Email: ");
+            String email = UserInput.getString().trim();
+            book = bc.selectBookTitleAuthor(title, email);
+            if (book != null) {
+                collectInfoLoop = false;
+            } else {
+                System.out.println("\nThe provided information does not match any book on file.");
+                collectInfoLoop = UserInput.getYesNo("Enter another title and author? [y/n]: ");
+            }
+        }
+        return book;
+    }
+
+    private Book getBookByTitlePublisherFromUser() {
+        Book book = null;
+        boolean collectInfoLoop = true;
+        while (collectInfoLoop) {
+            System.out.println("Enter the following information");
+            System.out.print("Title: ");
+            String title = UserInput.getString().trim();
+            System.out.print("Publisher name: ");
+            String pName = UserInput.getString().trim();
+            book = bc.selectBookTitlePublisher(title, pName);
+            if (book != null) {
+                collectInfoLoop = false;
+            } else {
+                System.out.println("\nThe provided information does not match any book on file.");
+                collectInfoLoop = UserInput.getYesNo("Enter another title and publisher? [y/n]: ");
+            }
+        }
+        return book;
     }
 
     private void updateBook_UI() {

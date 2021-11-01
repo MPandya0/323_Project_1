@@ -28,4 +28,12 @@ public class Menus {
         System.out.println("  4) Add Individual Author to Ad Hoc Group");
         System.out.println("  5) Go Back");
     }
+
+    public static void bookSearchOptions() {
+        System.out.println("\nHow would you like to query the book");
+        System.out.println("  1) ISBN");
+        System.out.println("  2) Title & Authoring Entity");
+        System.out.println("  3) Title & Publisher");
+        System.out.println("  4) Go Back");
+    }
 }

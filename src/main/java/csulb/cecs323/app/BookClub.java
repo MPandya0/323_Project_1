@@ -38,7 +38,7 @@ public class BookClub {
     * Rather than make this a global variable, we will make it an instance variable within the BookClub
     * class, and create an instance of BookClub in the main.
     */
-   public EntityManager entityManager; // TODO - change back to private after all functions are written.
+   private EntityManager entityManager;
 
    /**
     * The Logger can easily be configured to log to a file, rather than, or in addition to, the console.
@@ -199,6 +199,7 @@ public class BookClub {
       tx.commit();
    }
 
+   // TODO - remove function and replace usage to persistClass()
    public <E> void insertSingleItem(E item) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
@@ -210,6 +211,13 @@ public class BookClub {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
       entityManager.persist(item);
+      tx.commit();
+   }
+
+   public void deleteBook(Book book) {
+      EntityTransaction tx = entityManager.getTransaction();
+      tx.begin();
+      entityManager.remove(book);
       tx.commit();
    }
 

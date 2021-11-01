@@ -5,15 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "UniquePublisher", columnNames = {"title", "publisher_name"}),
-        @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "AUTHORING_ENTITY_NAME"})
+        @UniqueConstraint(name = "UniqueAuthor", columnNames = {"title", "AUTHORING_ENTITY_EMAIL"})
 })
-//@NamedNativeQuery(
-//        name="FindBookUsingISBN",
-//        query = "Select B.* " +
-//                "From Book B " +
-//                "Where B.ISBN = ? ",
-//        resultClass = Book.class
-//)
 @NamedNativeQuery(
         name = "FindPublisherUsingTitlePublisherName",
         query = "Select B.* " +
