@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @NamedNativeQuery(
         name = "AuthoringEntitiesPK",
-        query = "SELECT AE.email, AE.AUTHORING_ENTITY_TYPE  FROM AuthoringEntity AE",
+        query = "SELECT AE.*  FROM AuthoringEntity AE",
         resultClass = AuthoringEntity.class
 )
 @NamedNativeQuery(
@@ -15,8 +15,6 @@ import javax.persistence.*;
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="AUTHORING_ENTITY_TYPE", length=31, discriminatorType=DiscriminatorType.STRING)
-
-
 //@Table(name="AUTHORING_ENTITIES")
 public class AuthoringEntity {
     @Id
@@ -49,7 +47,6 @@ public class AuthoringEntity {
 
     @Transient
     public String getDiscrimatorValue(){
-        String t = this.getClass().getAnnotation(DiscriminatorValue.class).value();
-        return t;
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
     }
 }

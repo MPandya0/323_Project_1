@@ -3,13 +3,9 @@ package csulb.cecs323.model;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.NamedNativeQuery;
 
 @Entity
-
-
 @DiscriminatorValue("Writing Group")
-
 public class WritingGroup extends AuthoringEntity {
 
     @Column(name="HEAD_WRITER", length = 80)

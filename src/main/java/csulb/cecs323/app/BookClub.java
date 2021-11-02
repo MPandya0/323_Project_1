@@ -70,8 +70,6 @@ public class BookClub {
       // Any changes to the database need to be done within a transaction.
       // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
 
-      bookclub.printAuthoringEntityPK();
-
       View mainView = new View(bookclub);
       mainView.begin();
 

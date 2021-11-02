@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @Entity
 @NamedNativeQuery(
         name = "PublisherPK",
-        query = "SELECT P.name From Publisher P",
+        query = "SELECT P.* From Publisher P",
         resultClass = Publisher.class
 )
 @NamedNativeQuery(

@@ -9,7 +9,7 @@ import javax.persistence.*;
 })
 @NamedNativeQuery(
         name = "BookPK",
-        query = "SELECT B.ISBN, B.title From Book B",
+        query = "SELECT B.* From Book B",
         resultClass =  Book.class
 )
 @NamedNativeQuery(

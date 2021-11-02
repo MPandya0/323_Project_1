@@ -460,7 +460,7 @@ public class View {
 
     private void listPrimaryKeys_UI() {
         System.out.println("1)Books \n 2) Publishers \n 3) Authoring entity\n 4) Exit Interface \n");
-        int option = UserInput.getIntRange(1,4,"Option:");
+        int option = UserInput.getIntRange(1,4,"Option: ");
         switch (option){
             case 1:
                 bc.printBookPK();
