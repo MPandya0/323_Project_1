@@ -25,7 +25,6 @@ import java.util.ArrayList;
         query = "Select P.* From Publisher P Where P.name = ? ",
         resultClass = Publisher.class
 )
-
 public class Publisher {
 
     @Id

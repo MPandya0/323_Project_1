@@ -1,12 +1,7 @@
 package csulb.cecs323.view;
 
 import csulb.cecs323.app.*;
-
 import csulb.cecs323.model.*;
-
-import csulb.cecs323.model.AuthoringEntity;
-import csulb.cecs323.model.Book;
-import csulb.cecs323.model.Publisher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -239,8 +234,9 @@ public class View {
 
 
     private int getValidYearFromUser(String prompt) {
+        int PRINTING_PRESS_INVENTED = 1440;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        return UserInput.getIntRange(0, currentYear, prompt);
+        return UserInput.getIntRange(PRINTING_PRESS_INVENTED, currentYear, prompt);
     }
 
 

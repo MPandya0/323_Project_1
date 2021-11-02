@@ -18,7 +18,6 @@ import csulb.cecs323.view.View;
 import csulb.cecs323.errorhandeling.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
