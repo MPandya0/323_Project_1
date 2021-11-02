@@ -241,17 +241,17 @@ public class View {
 
 
     private void listObjectInformation_UI() {
-        System.out.println("Queries \n 1) Publisher \n 2) Books \n 3) Writing Group \n");
+        System.out.println("\nQueries \n  1) Publisher \n  2) Books \n  3) Writing Group \n");
         int option = UserInput.getIntRange(1, 3, "Option: ");
         int availableInfo = 1;
         switch(option){
             case 1:
-                System.out.println("Search By \n 1) Email \n 2) Name \n 3) Phone");
+                System.out.println("Search By \n  1) Email \n  2) Name \n  3) Phone");
                 availableInfo = UserInput.getIntRange(1,3,"Option: ");
                 publisherInfo(availableInfo);
                 break;
             case 2:
-                System.out.println("Search By \n 1)ISBN  \n 2) title and Publisher \n 3) title and Authoring Entity \n");
+                System.out.println("Search By \n  1) ISBN  \n  2) title and Publisher \n  3) title and Authoring Entity \n");
                 availableInfo = UserInput.getIntRange(1,3,"Option: ");
                 bookInfo(availableInfo);
                 break;
@@ -290,7 +290,10 @@ public class View {
     }
 
     private void printPublisherInfo(Publisher p){
-        System.out.printf("Name: %s20 \nEmail: %s20 \nPhone: %s20", p.getName(), p.getEmail(),p.getPhone());
+//        System.out.printf("\nName: %-20s \nEmail: %-20s \nPhone: %-20s\n", p.getName(), p.getEmail(),p.getPhone());
+        System.out.printf("\n%-7s %s", "Name: ", p.getName());
+        System.out.printf("\n%-7s %s", "Email: ", p.getEmail());
+        System.out.printf("\n%-7s %s\n", "Phone: ", p.getPhone());
     }
 
     private void bookInfo(int availableInfo) {
@@ -316,7 +319,12 @@ public class View {
     }
 
     private void printBookInfo(Book book){
-        System.out.printf("Title: %s20 \n ISBN: %s20 \n YearPublished: %s20 \n AuthorEmail: %s20 \n Publisher: %s20", book.getTitle(), book.getISBN(), book.getYearPublished(), book.getAuthoringEntity().getEmail(), book.getPublisher().getName());
+//        System.out.printf("\nTitle: %-20s \nISBN: %-20s \nYearPublished: %-20s \nAuthorEmail: %-20s \nPublisher: %-20s\n", book.getTitle(), book.getISBN(), book.getYearPublished(), book.getAuthoringEntity().getEmail(), book.getPublisher().getName());
+        System.out.printf("\n%-16s %s", "Title: ", book.getTitle());
+        System.out.printf("\n%-16s %s", "ISBN: ", book.getISBN());
+        System.out.printf("\n%-16s %s", "YearPublished: ", book.getYearPublished());
+        System.out.printf("\n%-16s %s", "AuthoringEmail: ", book.getAuthoringEntity().getEmail());
+        System.out.printf("\n%-16s %s\n", "Publisher: ", book.getPublisher().getName());
     }
 
 
@@ -324,9 +332,11 @@ public class View {
         switch (availableInfo){
             case 1:
                 AuthoringEntity ae = getValidWritingGroupFromUser();
-                System.out.printf("Type: %s20 \n Email: %s20 \n Phone: %s20", ae.getDiscrimatorValue(),ae.getEmail(), ae.getName());
+//                System.out.printf("\nType: %-20s \nEmail: %-20s \nPhone: %-20s\n", ae.getDiscrimatorValue(),ae.getEmail(), ae.getName());
+                System.out.printf("\n%-7s %s", "Type: ", ae.getDiscrimatorValue());
+                System.out.printf("\n%-7s %s", "Email: ", ae.getEmail());
+                System.out.printf("\n%-7s %s\n", "Phone: ", ae.getName());
         }
-
     }
 
     private AuthoringEntity getValidWritingGroupFromUser() {
