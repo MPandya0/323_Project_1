@@ -272,28 +272,25 @@ public class View {
         Publisher p;
         switch(availableInfo){
             case 1:
-                System.out.println("Email: ");
-                String email = UserInput.getString();
-                p = bc.findPublisherUsingEmail(email);
-                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+                p = getValidPublisherEmail();
+                printPublisherInfo(p);
                 break;
-
             case 2:
-                System.out.println("Name: ");
-                String name = UserInput.getString();
-                p = bc.findPublisherUsingName(name);
-                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
+                p = getValidPublisherFromUser();
+                printPublisherInfo(p);
                 break;
 
-                case 3:
-                System.out.println("Phone: ");
-                String phone = UserInput.getString();
-                p = bc.findPublisherUsingPhone(phone);
-                System.out.printf("%20s \n %20s \n %20s", p.getName(), p.getEmail(), p.getPhone());
-                break;
 
+            case 3:
+                p = getValidPublisherPhone();
+                printPublisherInfo(p);
+                break;
         }
 
+    }
+
+    private void printPublisherInfo(Publisher p){
+        System.out.printf("Name: %s20 \nEmail: %s20 \nPhone: %s20", p.getName(), p.getEmail(),p.getPhone());
     }
 
     private void bookInfo(int availableInfo) {
@@ -301,51 +298,52 @@ public class View {
         switch (availableInfo) {
 
             case 1:
-                System.out.print("Enter ISBN: ");
-                String ISBN = UserInput.getString();
-
-                recievedBook=  bc.selectBookByIsbn(ISBN);
-                System.out.printf("ISBN: %-15s \n Title: %-40s \n YearPublished: %-40s", recievedBook.getISBN(), recievedBook.getTitle(), recievedBook.getYearPublished() );
+                recievedBook = getBookByIsbnFromUser();
+                printBookInfo(recievedBook);
                 break;
 
             case 2:
-                System.out.println("title");
-                String title = UserInput.getString();
-
-                System.out.println("Publisher");
-                String publisher = UserInput.getString();
-
-                recievedBook = bc.selectBookTitlePublisher(title, publisher);
-                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook.getISBN(), recievedBook.getTitle(), recievedBook.getYearPublished() );
+                recievedBook = getBookByTitleAuthorFromUser();
+                printBookInfo(recievedBook);
                 break;
 
             case 3:
-                System.out.println("title");
-                String title1 = UserInput.getString();
-
-                System.out.println("Authoring Entity");
-                String author = UserInput.getString();
-
-                recievedBook = bc.selectBookTitleAuthor(title1, author);
-                System.out.printf("%-15s \n %-40s \n %-40s", recievedBook, recievedBook.getTitle(), recievedBook.getYearPublished() );
+                recievedBook = getBookByTitlePublisherFromUser();
+                printBookInfo(recievedBook);
                 break;
         }
 
     }
+
+    private void printBookInfo(Book book){
+        System.out.printf("Title: %s20 \n ISBN: %s20 \n YearPublished: %s20 \n AuthorEmail: %s20 \n Publisher: %s20", book.getTitle(), book.getISBN(), book.getYearPublished(), book.getAuthoringEntity().getEmail(), book.getPublisher().getName());
+    }
+
 
     private void writingGroupInfo(int availableInfo){
         switch (availableInfo){
             case 1:
-                System.out.println("Email: \n");
-                String email = UserInput.getString();
-
-                AuthoringEntity ae = bc.findAuthoringEntity(email);
-                System.out.printf("%15s \n %15s", ae.getName(), ae.getEmail());
+                AuthoringEntity ae = getValidWritingGroupFromUser();
+                System.out.printf("Type: %s20 \n Email: %s20 \n Phone: %s20", ae.getDiscrimatorValue(),ae.getEmail(), ae.getName());
         }
 
     }
 
-
+    private AuthoringEntity getValidWritingGroupFromUser() {
+        AuthoringEntity ae = null;
+        boolean writingGroupInSystem = false;
+        while (!writingGroupInSystem) {
+            System.out.print("Authoring Entity Email: ");
+            String authorEmail = UserInput.getString().trim();
+            ae = bc.findWritingGroupEntity(authorEmail);
+            if (ae == null) {
+                System.out.println("That is not a recognized Writing Group email.");
+            } else {
+                writingGroupInSystem = true;
+            }
+        }
+        return ae;
+    }
 
     private void deleteBook_UI() {
         Menus.bookSearchOptions();
@@ -471,4 +469,35 @@ public class View {
         }
     }
 
+    private Publisher getValidPublisherEmail(){
+        Publisher publisher = null;
+        boolean publisherInSystem = false;
+        while (!publisherInSystem) {
+            System.out.print("Publisher email: ");
+            String pEmail = UserInput.getString().trim();
+            publisher = bc.findPublisherUsingEmail(pEmail);
+            if (publisher == null) {
+                System.out.println("That is not an existing publisher in our database.");
+            } else {
+                publisherInSystem = true;
+            }
+        }
+        return publisher;
+    }
+
+    private Publisher getValidPublisherPhone(){
+        Publisher publisher = null;
+        boolean publisherInSystem = false;
+        while (!publisherInSystem) {
+            System.out.print("Publisher Phone: ");
+            String pPhone = UserInput.getString().trim();
+            publisher = bc.findPublisherUsingPhone(pPhone);
+            if (publisher == null) {
+                System.out.println("That is not an existing publisher in our database.");
+            } else {
+                publisherInSystem = true;
+            }
+        }
+        return publisher;
+    }
 }

@@ -239,6 +239,20 @@ public class BookClub {
    }
 
    /**
+    * Returns AuthoringEntity using PK
+    * @param email
+    * @return searched AuthoringEntity
+    */
+   public AuthoringEntity findWritingGroupEntity(String email){
+      AuthoringEntity writerGroup = null;
+      List<AuthoringEntity> listWritingGroup = this.entityManager.createNamedQuery("FindWritingGroupUsingEmail", AuthoringEntity.class).setParameter(1, email).getResultList();
+      if(listWritingGroup.size() != 0){
+         writerGroup = listWritingGroup.get(0);
+      }
+      return writerGroup;
+   }
+
+   /**
     *
     * @return
     */
