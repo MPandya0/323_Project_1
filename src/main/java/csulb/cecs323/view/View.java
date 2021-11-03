@@ -195,6 +195,13 @@ public class View {
         }
     }
 
+    /**
+     * Gets a publishers name from the user and validates that it
+     * is an existing publisher within the database. If the publisher
+     * does not exist, then the user is prompted to enter another name.
+     *
+     * @return The selected publisher from the database.
+     */
     private Publisher getValidPublisherFromUser() {
         Publisher publisher = null;
         boolean publisherInSystem = false;
@@ -211,6 +218,14 @@ public class View {
         return publisher;
     }
 
+    /**
+     * Gets an individual Author entity from the database selected
+     * by the user based on the given email address entered in. If
+     * the given email address is not a valid email address, the user
+     * is prompted to reenter another email address.
+     *
+     * @return The valid individual author from the database.
+     */
     private IndividualAuthor getValidIndividualAuthorFromUser() {
         IndividualAuthor ia = null;
         boolean authorInSystem = false;
@@ -227,6 +242,14 @@ public class View {
         return ia;
     }
 
+    /**
+     * Returns a valid ad hoc team from the database based on the
+     * given email address by the user. The user is prompted to re-
+     * enter an email if the given email is not a valid ad hoc team
+     * email.
+     *
+     * @return The valid AdHocTeam from the database.
+     */
     private AdHocTeam getValidAdHocTeamFromUser() {
         AdHocTeam team = null;
         boolean teamInSystem = false;
@@ -243,6 +266,15 @@ public class View {
         return team;
     }
 
+
+    /**
+     * Returns an existing author from the database based on the given
+     * email address given by the user. If the email address does not
+     * query an existing Author, then the user is prompted to enter another
+     * email address.
+     *
+     * @return The valid author from the database.
+     */
     private AuthoringEntity getValidAuthorFromUser() {
         AuthoringEntity ae = null;
         boolean authorInSystem = false;
