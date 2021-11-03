@@ -292,8 +292,9 @@ public class BookClub {
    }
 
    /**
-    *
-    * @return
+    * Find Publisher using name
+    * @name
+    * @return Publisher
     */
    public Publisher findPublisherUsingName(String name){
       try {
@@ -308,6 +309,11 @@ public class BookClub {
       }
    }
 
+   /**
+    * Find Pubisher Using Email
+    * @param email
+    * @return Publisher
+    */
    public Publisher findPublisherUsingEmail(String email){
       try {
          return entityManager.createNamedQuery("FindPublisherUsingEmail", Publisher.class).setParameter(1, email).getSingleResult();
@@ -321,7 +327,11 @@ public class BookClub {
       }
    }
 
-
+   /**
+    * Finds Publisher Using Phone #
+    * @param phone
+    * @return Publisher
+    */
    public Publisher findPublisherUsingPhone(String phone){
       try {
          return entityManager.createNamedQuery("FindPublisherUsingPhone", Publisher.class).setParameter(1, phone).getSingleResult();
@@ -348,8 +358,8 @@ public class BookClub {
       }
    }
 
-   /** prints name of all publishers in the DB
-    *
+   /**
+    * prints name of all publishers in the DB
     */
    public void printpublisherPK(){
       List<Publisher> publishers = entityManager.createNamedQuery("PublisherPK").getResultList();
@@ -361,8 +371,8 @@ public class BookClub {
       }
    }
 
-   /** prints ISBN and title of all books in the DB
-    *
+   /**
+    * prints ISBN and title of all books in the DB
     */
    public void printBookPK(){
       List<Book> books = entityManager.createNamedQuery("BookPK").getResultList();

@@ -273,7 +273,9 @@ public class View {
         return UserInput.getIntRange(PRINTING_PRESS_INVENTED, currentYear, prompt);
     }
 
-
+    /**
+     * UI to list Information about different queries
+     */
     private void listObjectInformation_UI() {
         System.out.println("\nQueries \n  1) Publisher \n  2) Books \n  3) Writing Group \n");
         int option = UserInput.getIntRange(1, 3, "Option: ");
@@ -323,13 +325,23 @@ public class View {
 
     }
 
-    private void printPublisherInfo(Publisher p){
+    /**
+     * Prints supplied Published Information
+     * @param p
+     */
+    private void printPublisherInfo(Publisher p) {
 //        System.out.printf("\nName: %-20s \nEmail: %-20s \nPhone: %-20s\n", p.getName(), p.getEmail(),p.getPhone());
-        System.out.printf("\n%-7s %s", "Name: ", p.getName());
-        System.out.printf("\n%-7s %s", "Email: ", p.getEmail());
-        System.out.printf("\n%-7s %s\n", "Phone: ", p.getPhone());
+        if (p != null) {
+            System.out.printf("\n%-7s %s", "Name: ", p.getName());
+            System.out.printf("\n%-7s %s", "Email: ", p.getEmail());
+            System.out.printf("\n%-7s %s\n", "Phone: ", p.getPhone());
+        }
     }
 
+    /**
+     * Gets information based on given coloumns
+     * @param availableInfo
+     */
     private void bookInfo(int availableInfo) {
         Book recievedBook;
         switch (availableInfo) {
@@ -352,27 +364,41 @@ public class View {
 
     }
 
+    /**
+     * prints information about supplied docs
+     * @param book
+     */
     private void printBookInfo(Book book){
 //        System.out.printf("\nTitle: %-20s \nISBN: %-20s \nYearPublished: %-20s \nAuthorEmail: %-20s \nPublisher: %-20s\n", book.getTitle(), book.getISBN(), book.getYearPublished(), book.getAuthoringEntity().getEmail(), book.getPublisher().getName());
+        if(book != null){
         System.out.printf("\n%-16s %s", "Title: ", book.getTitle());
         System.out.printf("\n%-16s %s", "ISBN: ", book.getISBN());
         System.out.printf("\n%-16s %s", "YearPublished: ", book.getYearPublished());
         System.out.printf("\n%-16s %s", "AuthoringEmail: ", book.getAuthoringEntity().getEmail());
-        System.out.printf("\n%-16s %s\n", "Publisher: ", book.getPublisher().getName());
+        System.out.printf("\n%-16s %s\n", "Publisher: ", book.getPublisher().getName());}
     }
 
-
+    /**
+     * gets WritingGroupInfo
+     * @param availableInfo
+     */
     private void writingGroupInfo(int availableInfo){
         switch (availableInfo){
             case 1:
                 AuthoringEntity ae = getValidWritingGroupFromUser();
 //                System.out.printf("\nType: %-20s \nEmail: %-20s \nPhone: %-20s\n", ae.getDiscrimatorValue(),ae.getEmail(), ae.getName());
+                if(ae != null){
                 System.out.printf("\n%-7s %s", "Type: ", ae.getDiscrimatorValue());
                 System.out.printf("\n%-7s %s", "Email: ", ae.getEmail());
                 System.out.printf("\n%-7s %s\n", "Phone: ", ae.getName());
         }
+        }
     }
 
+    /**
+     * gets a valid User from input checks with the db
+     * @return Valid Authoring Entity
+     */
     private AuthoringEntity getValidWritingGroupFromUser() {
         AuthoringEntity ae = null;
         boolean writingGroupInSystem = false;
@@ -451,6 +477,10 @@ public class View {
         }
     }
 
+    /**
+     * checks entered ISBN with db
+     * @returns Valid Book
+     */
     private Book getBookByIsbnFromUser() {
         Book book = null;
         boolean collectInfoLoop = true;
@@ -468,6 +498,10 @@ public class View {
         return book;
     }
 
+    /**
+     * checks book based on title and author in the db
+     * @return Valid book
+     */
     private Book getBookByTitleAuthorFromUser() {
         Book book = null;
         boolean collectInfoLoop = true;
@@ -488,6 +522,10 @@ public class View {
         return book;
     }
 
+    /**
+     * Checks book in the db based on title/publisher
+     * @return Valid Book
+     */
     private Book getBookByTitlePublisherFromUser() {
         Book book = null;
         boolean collectInfoLoop = true;
@@ -508,6 +546,9 @@ public class View {
         return book;
     }
 
+    /**
+     * Prompts up UI for Primary Key
+     */
     private void listPrimaryKeys_UI() {
         System.out.println("1)Books \n 2) Publishers \n 3) Authoring entity\n 4) Exit Interface \n");
         int option = UserInput.getIntRange(1,4,"Option: ");
@@ -525,6 +566,10 @@ public class View {
         }
     }
 
+    /**
+     * Get's Publisher Based on Email
+     * @return Publuisher
+     */
     private Publisher getValidPublisherEmail(){
         Publisher publisher = null;
         boolean publisherInSystem = false;
@@ -541,6 +586,10 @@ public class View {
         return publisher;
     }
 
+    /**
+     * Get Publisher based on Phone
+     * @return Publihser
+     */
     private Publisher getValidPublisherPhone(){
         Publisher publisher = null;
         boolean publisherInSystem = false;
