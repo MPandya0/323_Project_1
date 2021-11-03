@@ -157,35 +157,62 @@ public class BookClub {
       return this.entityManager.find(AdHocTeam.class, email);
    }
 
+   /**
+    * Validates that the given book, if entered into the database
+    * will not violate any primary key or uniqueness constraints.
+    *
+    * @param newBook The book to be validated
+    * @throws PrimaryKeyConstraintException  The new book has a conflicting ISBN
+    * @throws UniqueConstraintException      The new book has a conflicting title & author or title & publisher
+    */
    public void validateNewBook(Book newBook) throws PrimaryKeyConstraintException, UniqueConstraintException {
+      // validates the ISBN primary key
       Book queriedBook = selectBookByIsbn(newBook.getISBN());
       if (queriedBook != null)
          throw new PrimaryKeyConstraintException(newBook.getISBN() + " is already an existing ISBN");
-
+      // validates the title & publisher uniqueness constraint
       queriedBook = selectBookTitlePublisher(newBook.getTitle(), newBook.getPublisher().getName());
       if (queriedBook != null)
          throw new UniqueConstraintException("Invalid title and publisher exception.");
-
+      // validates the title and author uniqueness constraint
       queriedBook = selectBookTitleAuthor(newBook.getTitle(), newBook.getAuthoringEntity().getEmail());
       if (queriedBook != null)
          throw new UniqueConstraintException("Invalid title and author exception.");
    }
 
+   /**
+    * Validates that the given publisher does not violate any of the
+    * primary key or uniqueness constraints.
+    *
+    * @param newPublisher The publisher to validate
+    * @throws PrimaryKeyConstraintException  The publisher has a conflicting primary key name
+    * @throws UniqueConstraintException      The publisher has a conflicting email or phone number
+    *                                        uniqueness constraint.
+    */
    public void validateNewPublisher(Publisher newPublisher) throws PrimaryKeyConstraintException, UniqueConstraintException {
+      // The publisher name is validated
       Publisher queriedPublisher = findPublisherUsingName(newPublisher.getName());
       if (queriedPublisher != null)
          throw new PrimaryKeyConstraintException("The publisher name \"" + newPublisher.getName() + "\" already exists.");
-
+      // the publisher email is validated
       queriedPublisher = findPublisherUsingEmail(newPublisher.getEmail());
       if (queriedPublisher != null)
          throw new UniqueConstraintException("Email address \"" + newPublisher.getEmail() + "\" already exists.");
-
+      // the publisher phone number is validated
       queriedPublisher = findPublisherUsingPhone(newPublisher.getPhone());
       if (queriedPublisher != null)
          throw new UniqueConstraintException("That Phone number already exists in our system.");
    }
 
+   /**
+    * Validates that the given authoring entity will not violate its
+    * email primary key constraint.
+    *
+    * @param ae The authoring entity to validate
+    * @throws PrimaryKeyConstraintException  The author has a conflicting primary key email
+    */
    public void validateNewAuthor(AuthoringEntity ae) throws PrimaryKeyConstraintException {
+      // validates the authoring entities email
       AuthoringEntity queriedAuthor = findAuthoringEntity(ae.getEmail());
       if (queriedAuthor != null)
          throw new PrimaryKeyConstraintException("Email address \"" + ae.getEmail() + "\" already exists.");
@@ -206,6 +233,12 @@ public class BookClub {
       tx.commit();
    }
 
+   /**
+    * Persists the given item to the database. The transaction is
+    * commited to the database.
+    * @param item The item to persist
+    * @param <E>  Indicates that the given argument is of an entity type
+    */
    public <E> void persistClass(E item) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();
@@ -213,6 +246,12 @@ public class BookClub {
       tx.commit();
    }
 
+   /**
+    * Deletes a given book from the database. The transaction is
+    * commited to the database.
+    *
+    * @param book The book to be deleted
+    */
    public void deleteBook(Book book) {
       EntityTransaction tx = entityManager.getTransaction();
       tx.begin();

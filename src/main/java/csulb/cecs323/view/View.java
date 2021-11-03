@@ -45,6 +45,10 @@ public class View {
         System.out.println("PROGRAM COMPETE");
     }
 
+    /**
+     * The view window that initiates the user with the
+     * selection on what type of entity to create.
+     */
     private void addNewObject_UI() {
         Menus.createNewItemMainMenu();
         int option = UserInput.getIntRange(1, 4, "Menu Option: ");
@@ -57,21 +61,28 @@ public class View {
         }
     }
 
+    /**
+     * The view window that allows the user to create a
+     * new authoring entity to the database.
+     */
     private void createNewAuthoringEntity_UI() {
+        // User chooses what type of authoring entity to create
         Menus.authoringEntityTypeMenu();
         int option = UserInput.getIntRange(1, 5, "Menu Option: ");
+        // if user chooses to assign an individual author to an ad hoc group
         if (option == 4) {
             assignAuthorToAdHoc();
+        // if the user chooses to create an individual, writing group, or ad hoc group
         } else if (option < 4) {
             boolean newAuthorLoop = true;
             while (newAuthorLoop) {
-
+                // gets the authors new information
                 System.out.println("\nenter the following information");
                 System.out.print("Authoring Name: ");
                 String name = UserInput.getString().trim();
                 System.out.print("Email Address: ");
                 String email = UserInput.getString().trim();
-
+                // assigns the subclass type to the authoring entity
                 AuthoringEntity ae;
                 if (option == 1) {
                     ae = new IndividualAuthor(email, name);
@@ -83,7 +94,7 @@ public class View {
                 } else {
                     ae = new AdHocTeam(email, name);
                 }
-
+                // validates the new entity and inserts it into the database
                 try {
                     bc.validateNewAuthor(ae);
                     bc.insertSingleItem(ae);
@@ -97,9 +108,14 @@ public class View {
         }
     }
 
+    /**
+     * The view that allows the user to create a new
+     * publisher entity to insert into the database.
+     */
     private void createNewPublisher_UI() {
         boolean newPublisherLoop = true;
         while (newPublisherLoop) {
+            // collect the new publisher information
             System.out.println("\nEnter the following information");
             System.out.print("Publisher Name: ");
             String name = UserInput.getString().trim();
@@ -107,9 +123,9 @@ public class View {
             String email = UserInput.getString().trim();
             System.out.print("Phone Number: ");
             String phone = UserInput.getString().trim();
-
+            // creates the new publisher entity
             Publisher publisher = new Publisher(name, email, phone);
-
+            // validates and inserts the entity into the database
             try {
                 bc.validateNewPublisher(publisher);
                 bc.insertSingleItem(publisher);
@@ -122,9 +138,14 @@ public class View {
         }
     }
 
+    /**
+     * The view that allows the user to create a new
+     * book entity to be inserted into the database.
+     */
     private void createNewBook_UI() {
         boolean newBookLoop = true;
         while (newBookLoop) {
+            // gets the new books information
             System.out.println("\nEnter the following information");
             System.out.print("Title: ");
             String title = UserInput.getString().trim();
@@ -133,9 +154,9 @@ public class View {
             Publisher publisher = getValidPublisherFromUser();
             AuthoringEntity ae = getValidAuthorFromUser();
             int year = getValidYearFromUser("Publication Year: ");
-
+            // creates the new book entity
             Book book = new Book(isbn, title, year, publisher, ae);
-
+            // validates and inserts the book into the database
             try {
                 bc.validateNewBook(book);
                 bc.insertSingleItem(book);
@@ -148,14 +169,20 @@ public class View {
         }
     }
 
+    /**
+     * Method used to assign an individual author to
+     * an ad hoc team.
+     */
     private void assignAuthorToAdHoc() {
         boolean assignAuthorLoop = true;
         while (assignAuthorLoop) {
+            // gets validated individual author and ad hoc team from user
             System.out.println("\nEnter the following information");
             AdHocTeam team = getValidAdHocTeamFromUser();
             IndividualAuthor author = getValidIndividualAuthorFromUser();
-
+            // if the assignment has not already been made
             if (!team.containsAuthor(author) && !author.containsAdHocTeam(team)) {
+                // assigns the author to the ad hoc team and commits it to the db
                 team.insertAuthor(author);
                 author.insertAdHocTeam(team);
                 bc.persistClass(team);
@@ -232,7 +259,14 @@ public class View {
         return ae;
     }
 
-
+    /**
+     * gets an entered year from the user ranging from 1440 to
+     * the current year. The earliest printed publication is estimated
+     * to be 1440.
+     *
+     * @param prompt The message displayed to the user prompting their input.
+     * @return The year value ranging from 1440 to current year.
+     */
     private int getValidYearFromUser(String prompt) {
         int PRINTING_PRESS_INVENTED = 1440;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -355,10 +389,16 @@ public class View {
         return ae;
     }
 
+    /**
+     * The view that allows the user to delete an existing
+     * book from the database.
+     */
     private void deleteBook_UI() {
+        // allows the user to select a book by ISBN, title & author, or title & publisher
         Menus.bookSearchOptions();
         int option = UserInput.getIntRange(1, 4, "User Option: ");
         if (option != 4) {
+            // retrieves the book from the database
             Book book;
             if (option == 1) {
                 book = getBookByIsbnFromUser();
@@ -367,7 +407,9 @@ public class View {
             } else {
                 book = getBookByTitlePublisherFromUser();
             }
+            // if the selected book exists in the db
             if (book != null) {
+                // print out the selected book and have the user confirm its deletion
                 System.out.println("\nSelected Book: " + book + "\n");
                 boolean confirmDelete = UserInput.getYesNo("Are you sure you wish to delete " +
                         book.getTitle() + " from file [y/n]: ");
@@ -381,6 +423,10 @@ public class View {
         }
     }
 
+    /**
+     * The view that allows the user to update an existing books
+     * author to an existing author in the database.
+     */
     private void updateBook_UI() {
         Menus.bookSearchOptions();
         int option = UserInput.getIntRange(1, 4, "User Option: ");
