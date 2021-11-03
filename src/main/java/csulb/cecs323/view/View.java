@@ -422,7 +422,7 @@ public class View {
                 if(ae != null){
                 System.out.printf("\n%-7s %s", "Type: ", ae.getDiscrimatorValue());
                 System.out.printf("\n%-7s %s", "Email: ", ae.getEmail());
-                System.out.printf("\n%-7s %s\n", "Phone: ", ae.getName());
+                System.out.printf("\n%-7s %s\n", "Name: ", ae.getName());
         }
         }
     }
